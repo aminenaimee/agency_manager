@@ -45,9 +45,10 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public FlightDto save(FlightDto flightDto, MultipartFile image) throws IOException {
         if (image != null && !image.isEmpty()) {
-            String imagePath = saveImage(image);
-            flightDto.setImagePaths(imagePath);
-            logger.info("Image path set in DTO: {}", imagePath);
+
+            String imageUrl = saveImage(image);
+            flightDto.setImageUrl(imageUrl);
+            logger.info("Image URL set in DTO: {}", imageUrl);
         } else {
             logger.warn("No image provided in the request.");
         }
@@ -55,8 +56,11 @@ public class FlightServiceImpl implements FlightService {
         Flight flight = convertToEntity(flightDto);
         flight = flightRepository.save(flight);
         logger.info("Flight saved with ID: {}", flight.getId());
+
+
         return convertToDto(flight);
     }
+
 
     @Override
     public FlightDto update(FlightDto flightDto) {
@@ -89,11 +93,17 @@ public class FlightServiceImpl implements FlightService {
             }
         }
 
+
         String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
         Path filePath = Paths.get(uploadDir, fileName);
+
+
         Files.write(filePath, image.getBytes());
         logger.info("File saved at: {}", filePath.toAbsolutePath());
-        return fileName;
+
+
+        String imageUrl = "http://localhost:8080/api/flights/files/" + fileName;
+        return imageUrl;
     }
 
 
