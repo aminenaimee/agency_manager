@@ -2,9 +2,7 @@ package ma.formations.ioc.servicenotification.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import ma.formations.ioc.servicenotification.entity.Mail;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -27,7 +25,7 @@ public class MailService {
      *
      * @return Success or failure message
      */
-    public String sendMail(Long reservationId, Long hotelId, String hotelName, String hotelMail, String roomName, String roomType, LocalDate checkIn, LocalDate checkOut , String departure, LocalDate departureTime) {
+    public String sendMail(Long reservationId, String hotelName, String hotelMail, String roomName, String roomType, LocalDate checkIn, LocalDate checkOut , String departure, LocalDate departureTime , String vehicleName, String vehicleBrand, LocalDate rentStartDate, LocalDate rentEndDate) {
         try {
             // Set up Thymeleaf context with variables
             Context context = new Context();
@@ -35,7 +33,7 @@ public class MailService {
             context.setVariable("title", "Dear Customer,");
             context.setVariable("description", "This is a sample email sent using Thymeleaf template in Spring Boot.");
             context.setVariable("reservationId", reservationId);
-            context.setVariable("hotelId", hotelId);
+
             context.setVariable("hotelName", hotelName);
             context.setVariable("hotelMail", hotelMail);
             context.setVariable("roomName", roomName);
@@ -44,6 +42,11 @@ public class MailService {
             context.setVariable("checkOut", checkOut);
             context.setVariable("departure", departure);
             context.setVariable("departureTime", departureTime);
+            context.setVariable("vehicleName", vehicleName);
+            context.setVariable("vehicleBrand", vehicleBrand);
+            context.setVariable("rentStartDate", rentStartDate);
+            context.setVariable("rentEndDate", rentEndDate);
+
 
 
 

@@ -1,13 +1,16 @@
 package ma.formations.ioc.servicehotel.service;
 
+import ma.formations.ioc.servicehotel.dto.HotelDto;
 import ma.formations.ioc.servicehotel.dto.RoomDto;
 import ma.formations.ioc.servicehotel.entity.Room;
 import ma.formations.ioc.servicehotel.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +19,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Autowired
     private RoomRepository roomRepository;
+
 
     @Override
     public List<RoomDto> findAll() {
@@ -98,5 +102,28 @@ public class RoomServiceImpl implements RoomService {
 
 
         return room;
+    }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    public void resetCheckDates(){
+        List<Room> rooms = roomRepository.findAll();
+        for(Room room:rooms){
+            if(room.getCheckOut().isAfter(LocalDate.now()) && !room.isAvailable()){
+                room.setCheckIn(null);
+                room.setCheckOut(null);
+                room.setAvailable(true);
+                roomRepository.save(room);
+            }
+        }
+    }
+
+    public RoomDto aviailableRoomByHotel(Long id ,Long idHotel) {
+        List<Room> rooms = roomRepository.findAll();
+        Room room = rooms.stream().filter(r -> r.getId().equals(id) && r.getHotel().getId().equals(idHotel)).findFirst().orElse(null);
+        if (room == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room not found with ID: " + id);
+
+        }
+        return convertToDto(room);
     }
 }

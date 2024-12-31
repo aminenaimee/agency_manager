@@ -12,7 +12,10 @@ public class EmailDetails {
     private LocalDate checkOut;
     private String departure;
     private LocalDate departureTime;
-
+    private String VehicleName;
+    private String VehicleBrand;
+    private LocalDate rentStartDate;
+    private LocalDate rentEndDate;
 
     public EmailDetails() {}
 
@@ -88,6 +91,32 @@ public class EmailDetails {
     public void setDepartureTime(LocalDate departureTime) {
         this.departureTime = departureTime;
     }
+
+    public String getVehicleName() {
+        return VehicleName;
+    }
+    public void setVehicleName(String VehicleName) {
+        this.VehicleName = VehicleName;
+    }
+    public String getVehicleBrand() {
+        return VehicleBrand;
+    }
+    public void setVehicleBrand(String VehicleBrand) {
+        this.VehicleBrand = VehicleBrand;
+    }
+    public LocalDate getRentStartDate() {
+        return rentStartDate;
+    }
+    public void setRentStartDate(LocalDate rentStartDate) {
+        this.rentStartDate = rentStartDate;
+    }
+    public LocalDate getRentEndDate() {
+        return rentEndDate;
+    }
+    public void setRentEndDate(LocalDate rentEndDate) {
+        this.rentEndDate = rentEndDate;
+    }
+
 
     @Override
     public String toString() {

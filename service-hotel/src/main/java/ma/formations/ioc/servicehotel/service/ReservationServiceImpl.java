@@ -1,15 +1,12 @@
 package ma.formations.ioc.servicehotel.service;
 
 import ma.formations.ioc.servicehotel.controller.FlightDto;
-import ma.formations.ioc.servicehotel.dto.EmailDetails;
+import ma.formations.ioc.servicehotel.dto.*;
 
-import ma.formations.ioc.servicehotel.dto.HotelDto;
-
-import ma.formations.ioc.servicehotel.dto.ReservationDto;
-import ma.formations.ioc.servicehotel.dto.RoomDto;
 import ma.formations.ioc.servicehotel.entity.Reservation;
 import ma.formations.ioc.servicehotel.feign.EmailSender;
 import ma.formations.ioc.servicehotel.feign.FlightService;
+import ma.formations.ioc.servicehotel.feign.VehicleService;
 import ma.formations.ioc.servicehotel.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +26,8 @@ public class ReservationServiceImpl implements ReservationService {
     private HotelServiceImpl hotelService;
     @Autowired
     private FlightService flightService;
+    @Autowired
+    private VehicleService vehicleService;
 
     @Override
     public ReservationDto save(ReservationDto reservationDto) {
@@ -46,26 +45,40 @@ public class ReservationServiceImpl implements ReservationService {
                 throw new RuntimeException("Hotel not found for ID: " + reservationDto.getHotelId());
             }
 
-            RoomDto room = roomService.findById(reservationDto.getRoomId());
+            RoomDto room = roomService.aviailableRoomByHotel(reservationDto.getRoomId(), reservationDto.getHotelId());
             if (room == null) {
-                throw new RuntimeException("Room not found for ID: " + reservationDto.getRoomId());
+                throw new RuntimeException("Room not available for ID: " + reservationDto.getRoomId());
             }
 
-            FlightDto fight = flightService.findById(reservationDto.getFlightId()).getBody();
+            FlightDto fight = flightService.availableFlight(reservationDto.getFlightId()).getBody();
             if (fight == null) {
-                throw new RuntimeException("Flight not found for ID: " + reservationDto.getFlightId());
+                throw new RuntimeException("Flight not available for ID: " + reservationDto.getFlightId());
+            }
+            VehicleDto vehicle = vehicleService.availableVehicle(reservationDto.getCarId()).getBody();
+            if (vehicle == null) {
+                throw new RuntimeException("Vehicle not available for ID: " + reservationDto.getCarId());
             }
 
             EmailDetails emailDetails = new EmailDetails();
-
+             //hotel
             emailDetails.setHotelName(hotel.getName());
             emailDetails.setHotelMail(hotel.getEmail());
+            //room
             emailDetails.setRoomName(room.getName());
             emailDetails.setRoomType(room.getType().toString());
             emailDetails.setCheckIn(room.getCheckIn());
             emailDetails.setCheckOut(room.getCheckOut());
+            //flight
             emailDetails.setDeparture(fight.getDeparture());
             emailDetails.setDepartureTime(fight.getDepartureTime());
+            //vehicle
+            emailDetails.setVehicleName(vehicle.getName());
+            emailDetails.setVehicleBrand(vehicle.getBrand());
+            emailDetails.setRentStartDate(vehicle.getRentStartDate());
+            emailDetails.setRentEndDate(vehicle.getRentEndDate());
+
+
+
 
             System.out.println("Sending email with details: " + emailDetails);
             emailSender.sendMail(emailDetails);

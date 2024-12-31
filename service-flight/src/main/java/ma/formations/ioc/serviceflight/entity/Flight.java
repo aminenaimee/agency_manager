@@ -22,7 +22,7 @@ public class Flight {
     private String airline;
     private String imageUrl;
     private String description;
-    private String status;
+    private boolean status;
     private String type;
     private LocalDate departureDate;
     private LocalDate arrivalDate;
@@ -32,7 +32,7 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(Long id, String name, String departure, String arrival, LocalDate departureTime, LocalDate arrivalTime, String duration, String price, String airline, String imageUrl, String description, String status, String type, LocalDate departureDate, LocalDate arrivalDate, Long userId , String imagePaths) {
+    public Flight(Long id, String name, String departure, String arrival, LocalDate departureTime, LocalDate arrivalTime, String duration, String price, String airline, String imageUrl, String description, boolean status, String type, LocalDate departureDate, LocalDate arrivalDate, Long userId , String imagePaths) {
         this.id = id;
         this.name = name;
         this.departure = departure;
@@ -84,11 +84,11 @@ public class Flight {
         this.type = type;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

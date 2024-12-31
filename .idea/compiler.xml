@@ -11,13 +11,14 @@
         <module name="serivce-proxy" />
         <module name="service-notification" />
       </profile>
-      <profile name="Annotation profile for service-flight" enabled="true">
+      <profile name="Annotation profile for service-vehicle" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
+        <module name="service-vehicle" />
         <module name="service-flight" />
         <module name="service-hotel" />
       </profile>
@@ -34,6 +35,7 @@
       <module name="service-hotels" options="-parameters" />
       <module name="service-notification" options="-parameters" />
       <module name="service-register" options="-parameters" />
+      <module name="service-vehicle" options="-parameters" />
     </option>
   </component>
 </project>

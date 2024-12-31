@@ -1,6 +1,6 @@
-package ma.formations.ioc.servicehotel;
+package ma.formations.ioc.servicevehicle;
 
-import ma.formations.ioc.servicehotel.entity.Hotel;
+import ma.formations.ioc.servicevehicle.entity.Vehicle;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -11,12 +11,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableScheduling
-public class ServiceHotelApplication {
+public class ServiceVehicleApplication {
 
 	public static void main(String[] args) {
-
-		SpringApplication.run(ServiceHotelApplication.class, args);
-
+		SpringApplication.run(ServiceVehicleApplication.class, args);
 
 	}
 

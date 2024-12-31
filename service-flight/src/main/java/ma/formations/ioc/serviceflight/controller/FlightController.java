@@ -77,4 +77,17 @@ public class FlightController {
         flightService.deleteById(id);
         return ResponseEntity.ok("Flight deleted successfully.");
     }
+
+    @GetMapping("/available/flights")
+    public ResponseEntity<?> availableFlights() {
+        return ResponseEntity.ok(flightService.availableFlights());
+    }
+
+    @GetMapping("/available/{id}")
+    public ResponseEntity<FlightDto> availableFlight(@PathVariable Long id) {
+        return ResponseEntity.ok(flightService.availableFlight(id));
+    }
+
+
+
 }

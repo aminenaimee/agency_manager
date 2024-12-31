@@ -12,4 +12,7 @@ public interface FlightService {
     FlightDto save(FlightDto flightDto, MultipartFile image) throws IOException;
     FlightDto update(FlightDto flightDto);
     void deleteById(Long id);
+     List<FlightDto> availableFlights();
+
+     FlightDto availableFlight(Long id);
 }

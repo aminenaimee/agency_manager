@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class EmailDetails {
     private Long reservationId;
-    private Long hotelId;
     private String hotelName;
     private String hotelMail;
     private String roomName;
@@ -13,38 +12,20 @@ public class EmailDetails {
     private LocalDate checkOut;
     private String departure;
     private LocalDate departureTime;
+    private String VehicleName;
+    private String VehicleBrand;
+    private LocalDate rentStartDate;
+    private LocalDate rentEndDate;
 
+    public EmailDetails() {}
 
-    public EmailDetails() {
-    }
-
-    public EmailDetails(Long reservationId, Long hotelId, String hotelName, String hotelMail, String roomName, String roomType, LocalDate checkIn, LocalDate checkOut, String departure, LocalDate departureTime) {
-        this.reservationId = reservationId;
-        this.hotelId = hotelId;
-        this.hotelName = hotelName;
-        this.hotelMail = hotelMail;
-        this.roomName = roomName;
-        this.roomType = roomType;
-        this.checkIn = checkIn;
-        this.checkOut = checkOut;
-        this.departure = departure;
-        this.departureTime = departureTime;
-    }
-
+    // Getters and Setters
     public Long getReservationId() {
         return reservationId;
     }
 
     public void setReservationId(Long reservationId) {
         this.reservationId = reservationId;
-    }
-
-    public Long getHotelId() {
-        return hotelId;
-    }
-
-    public void setHotelId(Long hotelId) {
-        this.hotelId = hotelId;
     }
 
     public String getHotelName() {
@@ -109,5 +90,46 @@ public class EmailDetails {
 
     public void setDepartureTime(LocalDate departureTime) {
         this.departureTime = departureTime;
+    }
+
+    public String getVehicleName() {
+        return VehicleName;
+    }
+    public void setVehicleName(String VehicleName) {
+        this.VehicleName = VehicleName;
+    }
+    public String getVehicleBrand() {
+        return VehicleBrand;
+    }
+    public void setVehicleBrand(String VehicleBrand) {
+        this.VehicleBrand = VehicleBrand;
+    }
+    public LocalDate getRentStartDate() {
+        return rentStartDate;
+    }
+    public void setRentStartDate(LocalDate rentStartDate) {
+        this.rentStartDate = rentStartDate;
+    }
+    public LocalDate getRentEndDate() {
+        return rentEndDate;
+    }
+    public void setRentEndDate(LocalDate rentEndDate) {
+        this.rentEndDate = rentEndDate;
+    }
+
+
+    @Override
+    public String toString() {
+        return "EmailDetails{" +
+                "reservationId=" + reservationId +
+                ", hotelName='" + hotelName + '\'' +
+                ", hotelMail='" + hotelMail + '\'' +
+                ", roomName='" + roomName + '\'' +
+                ", roomType='" + roomType + '\'' +
+                ", checkIn=" + checkIn +
+                ", checkOut=" + checkOut +
+                ", departure='" + departure + '\'' +
+                ", departureTime=" + departureTime +
+                '}';
     }
 }

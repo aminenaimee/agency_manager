@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -126,5 +127,27 @@ public class FlightServiceImpl implements FlightService {
                 flightDto.getStatus(), flightDto.getType(), flightDto.getDepartureDate(), flightDto.getArrivalDate(),
                 flightDto.getUserId(), flightDto.getImagePaths()
         );
+    }
+
+    public List<FlightDto> availableFlights() {
+        List<FlightDto> flights = flightRepository.findAll().stream().map(this::convertToDto).toList();
+        List<FlightDto> availableFlights = new ArrayList<>();
+        for(FlightDto flight:flights){
+            if(flight.getStatus()){
+                availableFlights.add(flight);
+            }
+        }
+       return availableFlights;
+    }
+
+    public FlightDto availableFlight(Long id){
+        FlightDto flight = flightRepository.findById(id).map(this::convertToDto).orElse(null);
+        if(flight == null){
+            throw new RuntimeException("Flight not found for ID: " + id);
+        }
+        if(!flight.getStatus()){
+            throw new RuntimeException("Flight not available for ID: " + id);
+        }
+        return flight;
     }
 }

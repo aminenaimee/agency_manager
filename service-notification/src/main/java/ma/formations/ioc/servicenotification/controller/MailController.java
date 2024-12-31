@@ -19,7 +19,7 @@ public class MailController {
     @PostMapping("/send")
     public String sendMail(@RequestBody EmailDetails emailDetails) {
 
-        return mailService.sendMail( emailDetails.getReservationId(), emailDetails.getHotelId(), emailDetails.getHotelName(), emailDetails.getHotelMail(), emailDetails.getRoomName(), emailDetails.getRoomType(), emailDetails.getCheckIn(), emailDetails.getCheckOut(), emailDetails.getDeparture(), emailDetails.getDepartureTime());
+        return mailService.sendMail( emailDetails.getReservationId(), emailDetails.getHotelName(), emailDetails.getHotelMail(), emailDetails.getRoomName(), emailDetails.getRoomType(), emailDetails.getCheckIn(), emailDetails.getCheckOut(), emailDetails.getDeparture(), emailDetails.getDepartureTime() , emailDetails.getVehicleName(), emailDetails.getVehicleBrand(), emailDetails.getRentStartDate(), emailDetails.getRentEndDate());
     }
 
 
