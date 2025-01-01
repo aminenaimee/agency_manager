@@ -7,15 +7,17 @@ public class ReservationDto {
     private Long roomId;
     private Long carId;
     private Long flightId;
+    private String sessionUrl;
     public ReservationDto() {
     }
-    public ReservationDto(Long flightId, Long carId, Long roomId, Long hotelId, Long clientId, Long id) {
+    public ReservationDto(Long flightId, Long carId, Long roomId, Long hotelId, Long clientId, Long id , String sessionUrl) {
         this.flightId = flightId;
         this.carId = carId;
         this.roomId = roomId;
         this.hotelId = hotelId;
         this.clientId = clientId;
         this.id = id;
+        this.sessionUrl = sessionUrl;
     }
     public Long getId() {
         return id;
@@ -55,7 +57,13 @@ public class ReservationDto {
         this.flightId = flightId;
     }
 
+    public String getSessionUrl() {
+        return sessionUrl;
+    }
 
+    public void setSessionUrl(String sessionUrl) {
+        this.sessionUrl = sessionUrl;
+    }
 }
 
 

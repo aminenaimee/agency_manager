@@ -1,4 +1,4 @@
-package ma.formations.ioc.servicehotel.controller;
+package ma.formations.ioc.servicehotel.dto;
 
 import java.time.LocalDate;
 
