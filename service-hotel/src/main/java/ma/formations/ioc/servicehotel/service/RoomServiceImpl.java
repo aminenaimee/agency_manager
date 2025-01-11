@@ -4,19 +4,32 @@ import ma.formations.ioc.servicehotel.dto.HotelDto;
 import ma.formations.ioc.servicehotel.dto.RoomDto;
 import ma.formations.ioc.servicehotel.entity.Room;
 import ma.formations.ioc.servicehotel.repository.RoomRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class RoomServiceImpl implements RoomService {
+    private static final Logger logger = LoggerFactory.getLogger(HotelServiceImpl.class);
 
+    @Value("${file.upload-dir:pics}")
+    private String uploadDir;
     @Autowired
     private RoomRepository roomRepository;
 
@@ -36,16 +49,54 @@ public class RoomServiceImpl implements RoomService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Room not found with ID: " + id));
     }
 
+    private String saveImage(MultipartFile image) throws IOException {
+        if (image == null || image.isEmpty()) {
+            logger.warn("No file provided or file is empty.");
+            return null;
+        }
+        logger.info("Processing file: {}", image.getOriginalFilename());
+
+        File uploadDirFile = new File(uploadDir);
+        if (!uploadDirFile.exists()) {
+            boolean created = uploadDirFile.mkdirs();
+            if (created) {
+                logger.info("Uploads directory created: {}", uploadDirFile.getAbsolutePath());
+            } else {
+                logger.error("Failed to create uploads directory: {}", uploadDirFile.getAbsolutePath());
+                throw new IOException("Could not create upload directory.");
+            }
+        }
+
+        String sanitizedFileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename().replaceAll("[^a-zA-Z0-9.]", "_");
+        Path filePath = Paths.get(uploadDir, sanitizedFileName);
+
+        Files.write(filePath, image.getBytes());
+        logger.info("File saved at: {}", filePath.toAbsolutePath());
+
+        return filePath.toString(); // Returns the full path
+    }
+
+
     @Override
-    public RoomDto save(RoomDto roomDto) {
+    public RoomDto save(RoomDto roomDto, MultipartFile image) throws IOException {
+        if (image != null && !image.isEmpty()) {
+            String imageUrl = saveImage(image);
+            roomDto.setImagePaths(imageUrl); // Save path in DTO
+            roomDto.setImageUrl("/api/rooms/files/" + Paths.get(imageUrl).getFileName().toString()); // Save accessible URL
+            logger.info("Image URL set in DTO: {}", roomDto.getImageUrl());
+        } else {
+            logger.warn("No image provided in the request.");
+        }
 
         Room room = convertToEntity(roomDto);
 
+        Room savedRoom = roomRepository.save(room); // Save to DB
 
-        Room savedRoom = roomRepository.save(room);
+        logger.debug("Saved Room in DB: {}", savedRoom); // Log the saved room for debugging
 
-        return convertToDto(savedRoom);
+        return convertToDto(savedRoom); // Return DTO after save
     }
+
 
     @Override
     public void deleteById(Long id) {
@@ -82,12 +133,13 @@ public class RoomServiceImpl implements RoomService {
         roomDto.setCheckOut(room.getCheckOut());
         roomDto.setType(room.getType());
         roomDto.setHotel(room.getHotel());
+        roomDto.setImagePaths(room.getImagePaths());
+        roomDto.setImageUrl(room.getImageUrl());
 
         return roomDto;
     }
 
     public Room convertToEntity(RoomDto roomDto) {
-        // Mapper le DTO RoomDto vers l'entité Room
         Room room = new Room();
         room.setId(roomDto.getId());
         room.setName(roomDto.getName());
@@ -99,10 +151,11 @@ public class RoomServiceImpl implements RoomService {
         room.setCheckOut(roomDto.getCheckOut());
         room.setType(roomDto.getType());
         room.setHotel(roomDto.getHotel());
-
-
+        room.setImagePaths(roomDto.getImagePaths()); // Fixed mapping
+        room.setImageUrl(roomDto.getImageUrl());     // Fixed mapping
         return room;
     }
+
 
     @Scheduled(cron = "0 0 0 * * *")
     public void resetCheckDates(){

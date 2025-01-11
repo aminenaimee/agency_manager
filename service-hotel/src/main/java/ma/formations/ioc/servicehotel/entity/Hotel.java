@@ -19,6 +19,8 @@ public class Hotel {
     private String phone ;
     private String email;
     private String address;
+    private String imagePaths;
+    private String imageUrl;
 
 
 
@@ -29,18 +31,7 @@ public class Hotel {
 
     public  Hotel(){};
 
-    public Hotel(Long id, String name, String city, int stars, double price, String description, String phone, String email, String address, List<Room> rooms) {
-        this.id = id;
-        this.name = name;
-        this.city = city;
-        this.stars = stars;
-        this.price = price;
-        this.description = description;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.rooms = rooms;
-    }
+
 
     public HotelDto getHotelDto(){
         HotelDto dto = new HotelDto();
@@ -54,6 +45,8 @@ public class Hotel {
         dto.setEmail(this.email);
         dto.setAddress(this.address);
         dto.setRooms(this.rooms);
+        dto.setImagePaths(this.getImagePaths());
+        dto.setImageUrl(this.getImageUrl());
         return dto;
     }
 
@@ -151,5 +144,36 @@ public class Hotel {
 
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
+    }
+
+    public Hotel(Long id, String name, String city, int stars, double price, String description, String phone, String email, String address, String imagePaths, String imageUrl, List<Room> rooms) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+        this.stars = stars;
+        this.price = price;
+        this.description = description;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.imagePaths = imagePaths;
+        this.imageUrl = imageUrl;
+        this.rooms = rooms;
+    }
+
+    public String getImagePaths() {
+        return imagePaths;
+    }
+
+    public void setImagePaths(String imagePaths) {
+        this.imagePaths = imagePaths;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

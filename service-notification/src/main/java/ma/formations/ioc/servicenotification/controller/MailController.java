@@ -3,10 +3,7 @@ package ma.formations.ioc.servicenotification.controller;
 import ma.formations.ioc.servicenotification.EmailDetails;
 import ma.formations.ioc.servicenotification.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
@@ -21,6 +18,8 @@ public class MailController {
 
         return mailService.sendMail( emailDetails.getReservationId(), emailDetails.getHotelName(), emailDetails.getHotelMail(), emailDetails.getRoomName(), emailDetails.getRoomType(), emailDetails.getCheckIn(), emailDetails.getCheckOut(), emailDetails.getDeparture(), emailDetails.getDepartureTime() , emailDetails.getVehicleName(), emailDetails.getVehicleBrand(), emailDetails.getRentStartDate(), emailDetails.getRentEndDate());
     }
+
+
 
 
 }

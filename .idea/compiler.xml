@@ -8,10 +8,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="service-register" />
-        <module name="serivce-proxy" />
+        <module name="service-destination" />
         <module name="service-notification" />
+        <module name="serivce-proxy" />
+        <module name="reactive-gateway" />
       </profile>
-      <profile name="Annotation profile for service-hotel" enabled="true">
+      <profile name="Annotation profile for service-vehicle" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -30,7 +32,9 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="reactive-gateway" options="-parameters" />
       <module name="serivce-proxy" options="-parameters" />
+      <module name="service-destination" options="-parameters" />
       <module name="service-flight" options="-parameters" />
       <module name="service-hotel" options="-parameters" />
       <module name="service-hotels" options="-parameters" />

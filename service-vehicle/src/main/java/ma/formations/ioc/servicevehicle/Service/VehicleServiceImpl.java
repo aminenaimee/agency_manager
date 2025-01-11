@@ -3,16 +3,31 @@ package ma.formations.ioc.servicevehicle.Service;
 import ma.formations.ioc.servicevehicle.dto.VehicleDto;
 import ma.formations.ioc.servicevehicle.entity.Vehicle;
 import ma.formations.ioc.servicevehicle.repository.VehicleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class VehicleServiceImpl implements VehicleService {
+
+    private static final Logger logger = LoggerFactory.getLogger(VehicleServiceImpl.class);
+
+    @Value("${file.upload-dir:pics}")
+    private String uploadDir;
     @Autowired
     private VehicleRepository vehicleRepository;
     @Override
@@ -26,10 +41,50 @@ public class VehicleServiceImpl implements VehicleService {
         return vehicleRepository.findById(id).map(this::convertToDto).orElse(null);
     }
 
+    private String saveImage(MultipartFile image) throws IOException {
+        if (image == null || image.isEmpty()) {
+            logger.warn("No file provided or file is empty.");
+            return null;
+        }
+        logger.info("Processing file: {}", image.getOriginalFilename());
+
+        File uploadDirFile = new File(uploadDir);
+        if (!uploadDirFile.exists()) {
+            boolean created = uploadDirFile.mkdirs();
+            if (created) {
+                logger.info("Uploads directory created: {}", uploadDirFile.getAbsolutePath());
+            } else {
+                logger.error("Failed to create uploads directory: {}", uploadDirFile.getAbsolutePath());
+                throw new IOException("Could not create upload directory.");
+            }
+        }
+
+        // Sanitize file name to avoid issues
+        String sanitizedFileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename().replaceAll("[^a-zA-Z0-9.]", "_");
+        Path filePath = Paths.get(uploadDir, sanitizedFileName);
+
+        Files.write(filePath, image.getBytes());
+        logger.info("File saved at: {}", filePath.toAbsolutePath());
+
+        return filePath.toString();
+    }
+
     @Override
-    public VehicleDto save(VehicleDto vehicleDto) {
+    public VehicleDto save(VehicleDto vehicleDto, MultipartFile image) throws IOException {
+        if (image != null && !image.isEmpty()) {
+            String imagePath = saveImage(image);
+            vehicleDto.setImagePaths(imagePath); // Set the file path
+            vehicleDto.setImageUrl("/api/vehicles/files/" + Paths.get(imagePath).getFileName().toString()); // Set the accessible URL
+            logger.info("Image URL set in DTO: {}", vehicleDto.getImageUrl());
+        } else {
+            logger.warn("No image provided in the request.");
+        }
+
         Vehicle vehicle = convertToEntity(vehicleDto);
-        vehicle = vehicleRepository.save(vehicle);
+        vehicle = vehicleRepository.save(vehicle); // Persist the entity
+
+        logger.debug("Saved Vehicle: {}", vehicle); // Debug log for verification
+
         return convertToDto(vehicle);
     }
 

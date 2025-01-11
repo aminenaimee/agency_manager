@@ -20,7 +20,7 @@ public class Flight {
     private String duration;
     private String price;
     private String airline;
-    private String imageUrl;
+
     private String description;
     private boolean status;
     private String type;
@@ -28,7 +28,7 @@ public class Flight {
     private LocalDate arrivalDate;
     private Long userId;
     private String imagePaths;
-
+    private String imageUrl;
     public Flight() {
     }
 

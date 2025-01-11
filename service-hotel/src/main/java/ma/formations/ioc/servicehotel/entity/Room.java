@@ -26,6 +26,9 @@ public class Room {
     private LocalDate checkOut;
     @Enumerated(EnumType.STRING)
     private RoomType type;
+    private String imagePaths;
+    private String imageUrl;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel")
@@ -33,17 +36,20 @@ public class Room {
 
     public Room() {
     }
-    public Room(Long id, String name, int beds, double price, String description, boolean available, LocalDate checkIn, LocalDate checkOut, RoomType type, Hotel hotel) {
-        this.id = id;
-        this.name = name;
-        this.beds = beds;
-        this.price = price;
-        this.description = description;
-        this.available = available;
-        this.checkIn = checkIn;
-        this.checkOut = checkOut;
-        this.type = type;
+
+    public Room(Hotel hotel, String imageUrl, String imagePaths, RoomType type, LocalDate checkOut, LocalDate checkIn, boolean available, String description, double price, int beds, String name, Long id) {
         this.hotel = hotel;
+        this.imageUrl = imageUrl;
+        this.imagePaths = imagePaths;
+        this.type = type;
+        this.checkOut = checkOut;
+        this.checkIn = checkIn;
+        this.available = available;
+        this.description = description;
+        this.price = price;
+        this.beds = beds;
+        this.name = name;
+        this.id = id;
     }
 
     public Room(RoomDto roomDto) {
@@ -57,6 +63,8 @@ public class Room {
         this.checkOut = roomDto.getCheckOut();
         this.type = roomDto.getType();
         this.hotel = roomDto.getHotel();
+        this.imagePaths =roomDto.getImagePaths();
+        this.imageUrl =roomDto.getImageUrl();
     }
 
     public Long getId() {
@@ -137,5 +145,21 @@ public class Room {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    public String getImagePaths() {
+        return imagePaths;
+    }
+
+    public void setImagePaths(String imagePaths) {
+        this.imagePaths = imagePaths;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

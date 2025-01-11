@@ -14,11 +14,15 @@ public class HotelDto {
     private String email;
     private String address;
     private List<Room> rooms;
+    private String imagePaths;
+    private String imageUrl;
+
+
 
     public HotelDto() {
     }
 
-    public HotelDto(Long id, String name, String city, int stars, double price, String description, String phone, String email, String address, List<Room> rooms) {
+    public HotelDto(Long id, String name, String city, int stars, double price, String description, String phone, String email, String address, List<Room> rooms, String imagePaths, String imageUrl) {
         this.id = id;
         this.name = name;
         this.city = city;
@@ -29,6 +33,8 @@ public class HotelDto {
         this.email = email;
         this.address = address;
         this.rooms = rooms;
+        this.imagePaths = imagePaths;
+        this.imageUrl = imageUrl;
     }
 
     public Long getId() {
@@ -109,6 +115,22 @@ public class HotelDto {
 
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getImagePaths() {
+        return imagePaths;
+    }
+
+    public void setImagePaths(String imagePaths) {
+        this.imagePaths = imagePaths;
     }
 }
 

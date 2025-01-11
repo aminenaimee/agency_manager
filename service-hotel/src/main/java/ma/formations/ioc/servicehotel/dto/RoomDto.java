@@ -20,21 +20,24 @@ public class RoomDto {
     private LocalDate checkOut;
     private RoomType type;
     private Hotel hotel;
-
+    private String imagePaths;
+    private String imageUrl;
     public RoomDto() {
     }
 
-    public RoomDto(Long id, String name, int beds, double price, String description, boolean available, LocalDate checkIn, LocalDate checkOut, RoomType type, Hotel hotel) {
-        this.id = id;
-        this.name = name;
-        this.beds = beds;
-        this.price = price;
-        this.description = description;
-        this.available = available;
-        this.checkIn = checkIn;
-        this.checkOut = checkOut;
-        this.type = type;
+    public RoomDto(String imageUrl, String imagePaths, Hotel hotel, RoomType type, LocalDate checkOut, LocalDate checkIn, boolean available, String description, double price, int beds, String name, Long id) {
+        this.imageUrl = imageUrl;
+        this.imagePaths = imagePaths;
         this.hotel = hotel;
+        this.type = type;
+        this.checkOut = checkOut;
+        this.checkIn = checkIn;
+        this.available = available;
+        this.description = description;
+        this.price = price;
+        this.beds = beds;
+        this.name = name;
+        this.id = id;
     }
 
     public Long getId() {
@@ -115,5 +118,21 @@ public class RoomDto {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    public String getImagePaths() {
+        return imagePaths;
+    }
+
+    public void setImagePaths(String imagePaths) {
+        this.imagePaths = imagePaths;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

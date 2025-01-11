@@ -28,6 +28,7 @@ public class Vehicle {
     private String imagePaths;
     private LocalDate rentStartDate;
     private LocalDate rentEndDate;
+    
 
     public Vehicle() {
     }
