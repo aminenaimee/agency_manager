@@ -13,7 +13,7 @@ public class RoomDto {
     private Long id;
     private String name;
     private int beds;
-    private double price;
+    private Long price;
     private String description;
     private boolean available;
     private LocalDate checkIn;
@@ -25,7 +25,7 @@ public class RoomDto {
     public RoomDto() {
     }
 
-    public RoomDto(String imageUrl, String imagePaths, Hotel hotel, RoomType type, LocalDate checkOut, LocalDate checkIn, boolean available, String description, double price, int beds, String name, Long id) {
+    public RoomDto(String imageUrl, String imagePaths, Hotel hotel, RoomType type, LocalDate checkOut, LocalDate checkIn, boolean available, String description, Long price, int beds, String name, Long id) {
         this.imageUrl = imageUrl;
         this.imagePaths = imagePaths;
         this.hotel = hotel;
@@ -64,11 +64,11 @@ public class RoomDto {
         this.beds = beds;
     }
 
-    public double getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 

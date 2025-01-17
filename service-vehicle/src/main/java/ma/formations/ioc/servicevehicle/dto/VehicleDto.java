@@ -13,7 +13,7 @@ public class VehicleDto {
     private boolean status;
     private String fuel;
     private String transmission;
-    private String price;
+    private Long price;
     private String year;
     private String imagePaths;
     private LocalDate rentStartDate;
@@ -22,7 +22,7 @@ public class VehicleDto {
     public VehicleDto() {
     }
 
-    public VehicleDto(Long id, String name, String brand, String model, String registrationNumber, String imageUrl, String description, boolean status, String fuel, String transmission, String price, String year, String imagePaths, LocalDate rentStartDate, LocalDate rentEndDate) {
+    public VehicleDto(Long id, String name, String brand, String model, String registrationNumber, String imageUrl, String description, boolean status, String fuel, String transmission, Long price, String year, String imagePaths, LocalDate rentStartDate, LocalDate rentEndDate) {
         this.id = id;
         this.name = name;
         this.brand = brand;
@@ -120,11 +120,11 @@ public class VehicleDto {
         this.transmission = transmission;
     }
 
-    public String getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 

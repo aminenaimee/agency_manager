@@ -25,7 +25,7 @@ public class MailService {
      *
      * @return Success or failure message
      */
-    public String sendMail(Long reservationId, String hotelName, String hotelMail, String roomName, String roomType, LocalDate checkIn, LocalDate checkOut , String departure, LocalDate departureTime , String vehicleName, String vehicleBrand, LocalDate rentStartDate, LocalDate rentEndDate) {
+    public String sendMail(Long reservationId, String hotelName, String hotelMail, String roomName, String roomType, LocalDate checkIn, LocalDate checkOut , String departure, LocalDate departureTime , String vehicleName, String vehicleBrand, LocalDate rentStartDate, LocalDate rentEndDate, Long totalAmount) {
         try {
             // Set up Thymeleaf context with variables
             Context context = new Context();
@@ -46,6 +46,7 @@ public class MailService {
             context.setVariable("vehicleBrand", vehicleBrand);
             context.setVariable("rentStartDate", rentStartDate);
             context.setVariable("rentEndDate", rentEndDate);
+            context.setVariable("totalAmount", totalAmount);
 
 
 

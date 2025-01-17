@@ -18,7 +18,7 @@ public class Flight {
     private LocalDate departureTime;
     private LocalDate arrivalTime;
     private String duration;
-    private String price;
+    private Long price;
     private String airline;
 
     private String description;
@@ -32,7 +32,7 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(Long id, String name, String departure, String arrival, LocalDate departureTime, LocalDate arrivalTime, String duration, String price, String airline, String imageUrl, String description, boolean status, String type, LocalDate departureDate, LocalDate arrivalDate, Long userId , String imagePaths) {
+    public Flight(Long id, String name, String departure, String arrival, LocalDate departureTime, LocalDate arrivalTime, String duration, Long price, String airline, String imageUrl, String description, boolean status, String type, LocalDate departureDate, LocalDate arrivalDate, Long userId , String imagePaths) {
         this.id = id;
         this.name = name;
         this.departure = departure;
@@ -116,11 +116,11 @@ public class Flight {
         this.airline = airline;
     }
 
-    public String getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 

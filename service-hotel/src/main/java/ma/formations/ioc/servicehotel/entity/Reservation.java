@@ -15,6 +15,7 @@ public class Reservation {
     private Long roomId;
     private Long carId;
     private Long flightId;
+    private Long totalPrice;
 
     public Reservation() {
     }
@@ -86,6 +87,13 @@ public class Reservation {
                 ", carId=" + carId +
                 ", flightId=" + flightId +
                 '}';
+    }
+
+    public Long getTotalPrice() {
+        return totalPrice;
+    }
+    public void setTotalPrice(Long totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
 

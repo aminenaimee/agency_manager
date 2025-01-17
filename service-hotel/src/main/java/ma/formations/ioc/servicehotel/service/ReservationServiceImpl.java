@@ -32,6 +32,8 @@ public class ReservationServiceImpl implements ReservationService {
     @Autowired
     private PaymentService paymentService;
     private String SessionUrl;
+
+
     @Override
 
     public ReservationDto save(ReservationDto reservationDto) {
@@ -40,28 +42,31 @@ public class ReservationServiceImpl implements ReservationService {
                 reservationDto.getFlightId() == null) {
             throw new IllegalArgumentException("All fields must be provided");
         }
-
+        //Hotel
         HotelDto hotel = hotelService.findById(reservationDto.getHotelId());
         if (hotel == null) {
             throw new RuntimeException("Hotel not found for ID: " + reservationDto.getHotelId());
         }
-
+        //room
         RoomDto room = roomService.aviailableRoomByHotel(reservationDto.getRoomId(), reservationDto.getHotelId());
         if (room == null) {
             throw new RuntimeException("Room not available for ID: " + reservationDto.getRoomId());
         }
-
+        //flight
         FlightDto flight = flightService.availableFlight(reservationDto.getFlightId()).getBody();
         if (flight == null) {
             throw new RuntimeException("Flight not available for ID: " + reservationDto.getFlightId());
         }
-
+        //vehicle
         VehicleDto vehicle = vehicleService.availableVehicle(reservationDto.getCarId()).getBody();
         if (vehicle == null) {
             throw new RuntimeException("Vehicle not available for ID: " + reservationDto.getCarId());
         }
+        // Calculate total price
+        Long totalPrice = flight.getPrice()+ vehicle.getPrice()+ room.getPrice();
 
-        ProductRequest productRequest = new ProductRequest(1000L, "USD");
+        ProductRequest productRequest = new ProductRequest(totalPrice*100, "USD");
+
         var paymentResponse = paymentService.checkoutProduct(productRequest);
 
         if (paymentResponse.getStatusCode().is2xxSuccessful()) {
@@ -82,10 +87,12 @@ public class ReservationServiceImpl implements ReservationService {
             emailDetails.setVehicleBrand(vehicle.getBrand());
             emailDetails.setRentStartDate(vehicle.getRentStartDate());
             emailDetails.setRentEndDate(vehicle.getRentEndDate());
+            emailDetails.setTotalAmount(totalPrice);
 
             emailSender.sendMail(emailDetails);
 
             // Save reservation
+            reservationDto.setTotalPrice(totalPrice);
             Reservation reservation = convertToEntity(reservationDto);
             Reservation savedReservation = reservationRepository.save(reservation);
 
@@ -123,7 +130,8 @@ public class ReservationServiceImpl implements ReservationService {
         reservationDto.setRoomId(reservation.getRoomId());
         reservationDto.setCarId(reservation.getCarId());
         reservationDto.setFlightId(reservation.getFlightId());
-        reservationDto.setSessionUrl(SessionUrl); // Use the session URL if applicable
+        reservationDto.setSessionUrl(SessionUrl);
+        reservationDto.setTotalPrice(reservation.getTotalPrice());
         return reservationDto;
     }
 
@@ -135,6 +143,9 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setRoomId(reservationDto.getRoomId());
         reservation.setCarId(reservationDto.getCarId());
         reservation.setFlightId(reservationDto.getFlightId());
+        reservation.setTotalPrice(reservationDto.getTotalPrice());
         return reservation;
     }
+
+
 }

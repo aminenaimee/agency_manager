@@ -10,7 +10,7 @@ public class FlightDto {
     private LocalDate departureTime;
     private LocalDate arrivalTime;
     private String duration;
-    private String price;
+    private Long price;
     private String airline;
     private String imageUrl;
     private String description;
@@ -22,7 +22,7 @@ public class FlightDto {
     public FlightDto() {
     }
 
-    public FlightDto(Long id, String name, String departure, String arrival, LocalDate departureTime, LocalDate arrivalTime, String duration, String price, String airline, String imageUrl, String description, String status, String type, LocalDate departureDate, LocalDate arrivalDate, Long userId) {
+    public FlightDto(Long id, String name, String departure, String arrival, LocalDate departureTime, LocalDate arrivalTime, String duration, Long price, String airline, String imageUrl, String description, String status, String type, LocalDate departureDate, LocalDate arrivalDate, Long userId) {
         this.id = id;
         this.name = name;
         this.departure = departure;
@@ -41,7 +41,7 @@ public class FlightDto {
         this.userId = userId;
     }
 
-    public FlightDto(String name, String departure, String arrival, LocalDate departureTime, LocalDate arrivalTime, String duration, String price, String airline, String imageUrl, String description, String status, String type, LocalDate departureDate, LocalDate arrivalDate, Long userId) {
+    public FlightDto(String name, String departure, String arrival, LocalDate departureTime, LocalDate arrivalTime, String duration, Long price, String airline, String imageUrl, String description, String status, String type, LocalDate departureDate, LocalDate arrivalDate, Long userId) {
         this.name = name;
         this.departure = departure;
         this.arrival = arrival;
@@ -115,11 +115,11 @@ public class FlightDto {
         this.duration = duration;
     }
 
-    public String getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 

@@ -8,17 +8,21 @@ public class ReservationDto {
     private Long carId;
     private Long flightId;
     private String sessionUrl;
+    private Long totalPrice;
     public ReservationDto() {
     }
-    public ReservationDto(Long flightId, Long carId, Long roomId, Long hotelId, Long clientId, Long id , String sessionUrl) {
-        this.flightId = flightId;
-        this.carId = carId;
-        this.roomId = roomId;
-        this.hotelId = hotelId;
-        this.clientId = clientId;
+
+    public ReservationDto(Long id, Long clientId, Long hotelId, Long roomId, Long carId, Long flightId, String sessionUrl, Long totalPrice) {
         this.id = id;
+        this.clientId = clientId;
+        this.hotelId = hotelId;
+        this.roomId = roomId;
+        this.carId = carId;
+        this.flightId = flightId;
         this.sessionUrl = sessionUrl;
+        this.totalPrice = totalPrice;
     }
+
     public Long getId() {
         return id;
     }
@@ -63,6 +67,14 @@ public class ReservationDto {
 
     public void setSessionUrl(String sessionUrl) {
         this.sessionUrl = sessionUrl;
+    }
+
+    public Long getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Long totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
 

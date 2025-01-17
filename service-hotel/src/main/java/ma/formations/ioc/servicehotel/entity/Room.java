@@ -19,7 +19,7 @@ public class Room {
     private Long id;
     private String name;
     private int beds;
-    private double price;
+    private Long price;
     private String description;
     private boolean available;
     private LocalDate checkIn;
@@ -37,7 +37,7 @@ public class Room {
     public Room() {
     }
 
-    public Room(Hotel hotel, String imageUrl, String imagePaths, RoomType type, LocalDate checkOut, LocalDate checkIn, boolean available, String description, double price, int beds, String name, Long id) {
+    public Room(Hotel hotel, String imageUrl, String imagePaths, RoomType type, LocalDate checkOut, LocalDate checkIn, boolean available, String description, Long price, int beds, String name, Long id) {
         this.hotel = hotel;
         this.imageUrl = imageUrl;
         this.imagePaths = imagePaths;
@@ -91,11 +91,11 @@ public class Room {
         this.beds = beds;
     }
 
-    public double getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 

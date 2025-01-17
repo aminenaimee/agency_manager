@@ -16,6 +16,7 @@ public class EmailDetails {
     private String VehicleBrand;
     private LocalDate rentStartDate;
     private LocalDate rentEndDate;
+    private Long totalAmount;
 
     public EmailDetails() {}
 
@@ -117,7 +118,12 @@ public class EmailDetails {
         this.rentEndDate = rentEndDate;
     }
 
-
+    public Long getTotalAmount() {
+        return totalAmount;
+    }
+    public void setTotalAmount(Long totalAmount) {
+        this.totalAmount = totalAmount;
+    }
     @Override
     public String toString() {
         return "EmailDetails{" +
