@@ -1,5 +1,6 @@
 package ma.formations.ioc.servicehotel.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class RoomDto {
     private LocalDate checkIn;
     private LocalDate checkOut;
     private RoomType type;
+    @JsonIgnore // Prevents serialization of the hotel field
     private Hotel hotel;
     private String imagePaths;
     private String imageUrl;

@@ -10,7 +10,7 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long clientId;
+    private String clientId;
     private Long hotelId;
     private Long roomId;
     private Long carId;
@@ -20,7 +20,7 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(Long flightId, Long carId, Long roomId, Long hotelId, Long clientId, Long id) {
+    public Reservation(Long flightId, Long carId, Long roomId, Long hotelId, String clientId, Long id) {
         this.flightId = flightId;
         this.carId = carId;
         this.roomId = roomId;
@@ -37,11 +37,11 @@ public class Reservation {
         this.id = id;
     }
 
-    public Long getClientId() {
+    public String getClientId() {
         return clientId;
     }
 
-    public void setClientId(Long clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 

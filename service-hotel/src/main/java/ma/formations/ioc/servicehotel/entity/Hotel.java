@@ -1,5 +1,6 @@
 package ma.formations.ioc.servicehotel.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import ma.formations.ioc.servicehotel.dto.HotelDto;
@@ -27,6 +28,7 @@ public class Hotel {
 
     @OneToMany(mappedBy = "hotel")
     @ToString.Exclude
+    @JsonManagedReference
     private List<Room> rooms;
 
     public  Hotel(){};

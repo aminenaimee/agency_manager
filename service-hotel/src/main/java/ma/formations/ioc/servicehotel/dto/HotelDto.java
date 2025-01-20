@@ -13,6 +13,7 @@ public class HotelDto {
     private String phone ;
     private String email;
     private String address;
+
     private List<Room> rooms;
     private String imagePaths;
     private String imageUrl;

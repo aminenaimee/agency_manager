@@ -1,5 +1,6 @@
 package ma.formations.ioc.servicehotel.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +33,7 @@ public class Room {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel")
+    @JsonIgnore
     private Hotel hotel;
 
     public Room() {
